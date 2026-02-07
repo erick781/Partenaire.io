@@ -6,20 +6,22 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Partenaire.io — Expert en Croissance",
   description:
-    "Votre partenaire de croissance. Nous aidons les entrepreneurs, concessionnaires, courtiers et restaurateurs à devenir #1 dans leur secteur grâce au contenu et à la publicité numérique.",
+    "La dernière agence dont vous aurez besoin. Nous aidons les entrepreneurs, concessionnaires, courtiers et restaurateurs à devenir #1 dans leur secteur grâce au contenu vidéo et à la publicité numérique.",
   keywords: [
     "croissance",
-    "marketing digital",
     "contenu vidéo",
-    "publicité",
+    "short form content",
+    "publicité numérique",
     "médias sociaux",
     "Québec",
-    "Canada",
+    "Laval",
+    "Viktor St-Jacques",
+    "partenaire",
   ],
   openGraph: {
     title: "Partenaire.io — Expert en Croissance",
     description:
-      "Votre partenaire de croissance. Plus de 300 entreprises propulsées.",
+      "La dernière agence dont vous aurez besoin. 300+ entreprises propulsées.",
     type: "website",
     locale: "fr_CA",
     siteName: "Partenaire.io",
@@ -33,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className="scroll-smooth">
-      <body className="min-h-screen bg-dark-950 text-white antialiased">
+      <body className="min-h-screen bg-noir text-white antialiased">
         <Navbar />
         <main>{children}</main>
         <Footer />

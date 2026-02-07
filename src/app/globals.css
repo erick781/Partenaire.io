@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 @layer base {
   html {
@@ -12,11 +12,11 @@
   }
 
   body {
-    @apply bg-dark-950 text-white font-sans;
+    @apply bg-noir text-white font-sans;
   }
 
   ::selection {
-    @apply bg-primary-500/30 text-white;
+    @apply bg-orange/30 text-white;
   }
 }
 
@@ -26,26 +26,7 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-300 bg-clip-text text-transparent;
-  }
-
-  .gradient-border {
-    @apply relative;
-  }
-
-  .gradient-border::before {
-    content: "";
-    @apply absolute inset-0 rounded-2xl p-[1px];
-    background: linear-gradient(
-      135deg,
-      theme("colors.primary.500"),
-      theme("colors.accent.500"),
-      theme("colors.primary.400")
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    @apply bg-gradient-to-r from-orange via-orange-light to-orange bg-clip-text text-transparent;
   }
 
   .glass-card {
@@ -53,15 +34,7 @@
   }
 
   .glass-card-hover {
-    @apply glass-card transition-all duration-500 hover:bg-white/[0.06] hover:border-white/[0.12] hover:shadow-2xl hover:shadow-primary-500/5;
-  }
-
-  .glow {
-    box-shadow: 0 0 60px -12px theme("colors.primary.500/0.3");
-  }
-
-  .glow-accent {
-    box-shadow: 0 0 60px -12px theme("colors.accent.500/0.3");
+    @apply glass-card transition-all duration-500 hover:bg-white/[0.06] hover:border-orange/[0.15] hover:shadow-2xl hover:shadow-orange/5;
   }
 }
 
@@ -90,19 +63,15 @@
   }
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  @apply bg-dark-950;
+  @apply bg-noir;
 }
-
 ::-webkit-scrollbar-thumb {
-  @apply bg-dark-700 rounded-full;
+  @apply bg-gris-700 rounded-full;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark-600;
+  @apply bg-gris-600;
 }
