@@ -9,6 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // AI CFO Design System
+        cfo: {
+          base: "#0A0A0F",
+          card: "#12121A",
+          elevated: "#16161F",
+          border: "#1E1E2A",
+          "border-light": "#2A2A3A",
+          text: "#E8E8ED",
+          muted: "#6B6B80",
+          dim: "#44445A",
+          green: "#00D47E",
+          red: "#FF4757",
+          yellow: "#FFBE0B",
+          blue: "#4C9EFF",
+          purple: "#8B5CF6",
+          accent: "#00D47E",
+        },
+        // Keep existing marketing site colors
         primary: {
           50: "#eff6ff",
           100: "#dbeafe",
@@ -52,6 +70,11 @@ const config: Config = {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Inter", "system-ui", "sans-serif"],
+        cfo: ["DM Sans", "system-ui", "sans-serif"],
+      },
+      borderRadius: {
+        cfo: "16px",
+        "cfo-inner": "10px",
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",
@@ -61,6 +84,7 @@ const config: Config = {
         "count-up": "countUp 2s ease-out forwards",
         float: "float 6s ease-in-out infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "pulse-dot": "pulseDot 2s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -82,6 +106,10 @@ const config: Config = {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
+        },
+        pulseDot: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.5", transform: "scale(1.2)" },
         },
       },
     },
