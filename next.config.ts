@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // Removed output: "export" — API routes + SSR required for Supabase auth
 };
 
 export default nextConfig;

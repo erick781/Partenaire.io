@@ -1,0 +1,16 @@
+export const CFO_COLORS = {
+  base: "#0A0A0F",
+  card: "#12121A",
+  elevated: "#16161F",
+  border: "#1E1E2A",
+  borderLight: "#2A2A3A",
+  text: "#E8E8ED",
+  muted: "#6B6B80",
+  dim: "#44445A",
+  green: "#00D47E",
+  red: "#FF4757",
+  yellow: "#FFBE0B",
+  blue: "#4C9EFF",
+  purple: "#8B5CF6",
+  accent: "#00D47E",
+} as const;
