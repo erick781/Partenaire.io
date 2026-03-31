@@ -1,0 +1,121 @@
+# Governance Rules — Partenaire.io Paperclip Operations
+#
+# These rules define what agents can do autonomously vs. what needs approval.
+# Paperclip enforces these at runtime via approval gates.
+
+version: "1.0"
+company: "Partenaire.io Ops"
+
+# ============================================================
+# PERMISSION LEVELS
+# ============================================================
+
+permissions:
+  # Level 0: Fully autonomous — agents execute without asking
+  autonomous:
+    description: "Read-only and internal analysis actions"
+    actions:
+      - generate_report
+      - calculate_kpi
+      - calculate_mrr
+      - calculate_arr
+      - calculate_margin
+      - pull_stripe_data
+      - pull_pandadoc_data
+      - reconcile_invoices
+      - score_client_health
+      - update_kpi_dashboard
+      - write_financial_summary
+      - write_aging_report
+      - flag_anomaly_internal
+      - log_audit_entry
+      - read_supabase_data
+      - write_ops_tables      # Write to ops_* Supabase tables
+
+  # Level 1: Department head approval (CFO approves for finance team)
+  department_approval:
+    description: "Actions with limited internal impact"
+    approver: "department_head"  # Agent's direct manager
+    timeout_hours: 8
+    actions:
+      - adjust_budget_forecast
+      - create_financial_alert   # P1/P2 alerts that go to Board
+      - flag_client_for_review
+      - create_churn_risk_brief
+      - recommend_action_plan
+
+  # Level 2: Board approval (Erick) — anything with external impact
+  board_approval:
+    description: "Client-facing or financial impact actions"
+    approver: "board"
+    timeout_hours: 24
+    escalation: "If not approved within 24h, re-notify Board"
+    actions:
+      - send_payment_reminder
+      - send_client_communication
+      - modify_invoice
+      - issue_refund
+      - change_billing_amount
+      - change_billing_schedule
+      - write_off_bad_debt
+      - modify_contract_terms
+      - pause_client_service
+      - terminate_client
+      - approve_discount
+      - execute_retention_campaign
+
+# ============================================================
+# BUDGET CONTROLS
+# ============================================================
+
+budgets:
+  company_monthly_cents: 18000  # $180/month total for all agents
+  overspend_policy: "hard_stop" # Agents pause at 100% budget
+  alert_threshold_pct: 80       # Alert Board at 80% usage
+
+  per_agent:
+    ceo:
+      monthly_cents: 5000
+      priority: "high"          # Last to be paused if company budget runs low
+    cfo:
+      monthly_cents: 10000
+      priority: "critical"      # Never paused — financial visibility is essential
+    invoicing_analyst:
+      monthly_cents: 3000
+      priority: "normal"
+
+# ============================================================
+# ESCALATION RULES
+# ============================================================
+
+escalation:
+  # When to bypass normal hierarchy and go straight to Board
+  bypass_to_board:
+    - severity: "p0"
+    - condition: "cash_runway_months < 2"
+    - condition: "churned_revenue_pct > 10"
+    - condition: "agent_budget_exhausted AND agent_priority = critical"
+
+  # Normal escalation path
+  default_path:
+    - from: "invoicing_analyst"
+      to: "cfo"
+      then: "ceo"
+      then: "board"
+
+  # Response time expectations
+  sla:
+    p0: "immediate"
+    p1: "4_hours"
+    p2: "24_hours"
+    p3: "next_weekly_review"
+
+# ============================================================
+# AUDIT REQUIREMENTS
+# ============================================================
+
+audit:
+  log_all_actions: true
+  log_all_data_reads: false    # Too noisy; only log writes and decisions
+  retention_days: 365          # Keep audit logs for 1 year
+  immutable: true              # Append-only; agents cannot delete audit entries

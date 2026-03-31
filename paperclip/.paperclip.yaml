@@ -1,0 +1,105 @@
+company:
+  name: "Partenaire.io Ops"
+  description: "Financial and operational intelligence for Partenaire.io growth marketing agency"
+  goal: "Maximize agency profitability through automated financial tracking, churn detection, and operational insights"
+  locale: "fr-CA"
+  timezone: "America/Toronto"
+
+agents:
+  - name: "Le Directeur"
+    role: ceo
+    adapter: claude_local
+    config_dir: ./agents/ceo
+    budget_monthly_cents: 5000  # $50/month
+    heartbeat:
+      enabled: true
+      intervalSec: 14400  # every 4 hours
+      wakeOnAssignment: true
+      wakeOnOnDemand: true
+      wakeOnAutomation: true
+    reports_to: board
+
+  - name: "Le Comptable"
+    role: cfo
+    adapter: claude_local
+    config_dir: ./agents/cfo
+    budget_monthly_cents: 10000  # $100/month — highest budget, most active agent
+    heartbeat:
+      enabled: true
+      intervalSec: 86400  # daily at 7:00 AM ET (configured via cron in production)
+      wakeOnAssignment: true
+      wakeOnOnDemand: true
+      wakeOnAutomation: true
+    reports_to: ceo
+
+  - name: "L'Analyste Facturation"
+    role: invoicing_analyst
+    adapter: claude_local
+    config_dir: ./agents/invoicing-analyst
+    budget_monthly_cents: 3000  # $30/month
+    heartbeat:
+      enabled: true
+      intervalSec: 86400  # daily at 9:00 AM ET
+      wakeOnAssignment: true
+      wakeOnOnDemand: true
+      wakeOnAutomation: false
+    reports_to: cfo
+
+governance:
+  approval_gates:
+    board_required:
+      - "send_client_communication"
+      - "modify_invoice"
+      - "issue_refund"
+      - "change_billing"
+      - "send_payment_reminder"
+      - "write_off_debt"
+      - "modify_contract"
+      - "pause_service"
+    cfo_required:
+      - "adjust_budget_forecast"
+      - "flag_client_for_review"
+      - "generate_financial_alert"
+    autonomous:
+      - "generate_report"
+      - "calculate_metrics"
+      - "flag_anomaly"
+      - "update_kpi_dashboard"
+      - "reconcile_payments"
+      - "score_client_health"
+      - "log_audit_entry"
+
+alerts:
+  channels:
+    p0_critical:
+      - sms
+      - slack_dm
+      - paperclip_ui
+    p1_high:
+      - slack_channel
+      - paperclip_ui
+    p2_medium:
+      - daily_digest
+      - paperclip_ui
+    p3_info:
+      - weekly_summary
+
+  triggers:
+    p0:
+      - "cash_runway_below_2_months"
+      - "payment_processor_down"
+      - "major_client_cancellation"  # >10% MRR
+    p1:
+      - "mrr_drop_exceeds_5_percent"
+      - "invoices_overdue_30_days_count_gte_3"
+      - "ad_spend_exceeds_budget_15_percent"
+      - "client_health_below_40"
+    p2:
+      - "client_health_below_60"
+      - "invoice_overdue_15_days"
+      - "revenue_concentration_above_15_percent"
+      - "deal_stale_14_days"
+    p3:
+      - "monthly_pnl_generated"
+      - "new_client_onboarded"
+      - "positive_pipeline_trend"

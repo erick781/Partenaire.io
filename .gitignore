@@ -32,6 +32,10 @@ yarn-error.log*
 .env*.local
 .env
 
+# paperclip
+.paperclip/
+paperclip/.env
+
 # vercel
 .vercel
 
